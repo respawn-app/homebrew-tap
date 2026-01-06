@@ -1,8 +1,8 @@
 class Ksrc < Formula
   desc "One-liner search and read for Kotlin dependency sources"
   homepage "https://github.com/respawn-app/ksrc"
-  url "https://github.com/respawn-app/ksrc/archive/refs/tags/v0.1.4.tar.gz"
-  sha256 "9ea3f8f619f0193799559f45bf632108684444d8c36d46c61ac9fe76736b9121"
+  url "https://github.com/respawn-app/ksrc/archive/refs/tags/v0.1.5.tar.gz"
+  sha256 "316710f056ec3633ff91c74b90b06c62348b79f2600091a35d877b9255bbf930"
   license "AGPL-3.0-only"
 
   depends_on "go" => :build
