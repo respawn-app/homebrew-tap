@@ -6,6 +6,7 @@ class Ksrc < Formula
   license "AGPL-3.0-only"
 
   depends_on "go" => :build
+  depends_on "ripgrep"
 
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/ksrc"
