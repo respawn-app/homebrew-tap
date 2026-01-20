@@ -3,6 +3,7 @@ class Ksrc < Formula
   homepage "https://github.com/respawn-app/ksrc"
   url "https://github.com/respawn-app/ksrc/archive/refs/tags/v0.5.0.tar.gz"
   sha256 "4660b65250bb25639e813fdf7dacbf22868df461797d001717d8ea51c985a05f"
+  revision 1
   license "AGPL-3.0-only"
 
   depends_on "go" => :build
