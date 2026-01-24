@@ -4,8 +4,6 @@ class Ksrc < Formula
   url "https://github.com/respawn-app/ksrc/archive/refs/tags/v0.5.0.tar.gz"
   sha256 "4660b65250bb25639e813fdf7dacbf22868df461797d001717d8ea51c985a05f"
   license "AGPL-3.0-only"
-  revision 1
-
   bottle do
     root_url "https://ghcr.io/v2/respawn-app/tap"
     sha256 cellar: :any_skip_relocation, arm64_tahoe:  "280d5e6accb90aa73299e8b98b453d33e6b2c4a92d6c9326a96b78183f26fb9d"
