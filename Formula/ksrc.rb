@@ -6,8 +6,8 @@ class Ksrc < Formula
   license "AGPL-3.0-only"
   bottle do
     root_url "https://ghcr.io/v2/respawn-app/tap"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "280d5e6accb90aa73299e8b98b453d33e6b2c4a92d6c9326a96b78183f26fb9d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "f9fec43394b27915e87dce7a7b38ebec5c87c71913071dba32490b75a41f9f6b"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "62f87d222eb2222068613c80f84ed8f04e889c53e34fc82824446b8e5db34d6a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "673add76551685ddcfdd15f625b113792f5c9d58319b2f2352b91007dfc12708"
   end
 
   depends_on "go" => :build
