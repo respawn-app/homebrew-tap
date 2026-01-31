@@ -7,8 +7,9 @@ class Ksrc < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/respawn-app/tap"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "56b696668e010c4fdf5193b544ccbd53cf1ed9fdd3de8331424afd96c304b7c5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "875fcb29d8ff76a62995c67be1852465ccb2e9cf81753d6e6df2448194bd8325"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "f2b155a1f93547526f2c2cc67822f8129de05f3c283ed18ad64007672a0f0c9d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "c1a0d8e6a76d7a8f83761909a2e57be0daf3d765fe9f99ab915f3a2b1abc952f"
   end
   depends_on "go" => :build
   depends_on "ripgrep"
