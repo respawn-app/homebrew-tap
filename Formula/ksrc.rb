@@ -14,7 +14,7 @@ class Ksrc < Formula
   depends_on "ripgrep"
 
   def install
-    system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/ksrc"
+    system "go", "build", *std_go_args(ldflags: "-s -w -X github.com/respawn-app/ksrc/internal/cli.Version=#{version}"), "./cmd/ksrc"
   end
 
   test do
