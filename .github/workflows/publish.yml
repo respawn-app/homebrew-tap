@@ -27,7 +27,7 @@ jobs:
           pr_number="$(jq -r '.workflow_run.pull_requests[0].number // empty' "$GITHUB_EVENT_PATH")"
           if [ -z "$pr_number" ]; then
             echo "No PR found for this workflow_run; skipping."
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            { echo "should_run=false"; } >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -37,15 +37,21 @@ jobs:
             "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/pulls/$pr_number")"
 
           if echo "$pr_json" | jq -e '.labels[]? | select(.name == "pr-pull")' >/dev/null; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
+            should_run=true
           else
             echo "PR #$pr_number missing pr-pull label; skipping."
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            should_run=false
           fi
 
-          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
-          echo "head_ref=$(echo "$pr_json" | jq -r '.head.ref')" >> "$GITHUB_OUTPUT"
-          echo "head_repo_fork=$(echo "$pr_json" | jq -r '.head.repo.fork')" >> "$GITHUB_OUTPUT"
+          head_ref="$(echo "$pr_json" | jq -r '.head.ref')"
+          head_repo_fork="$(echo "$pr_json" | jq -r '.head.repo.fork')"
+
+          {
+            echo "should_run=$should_run"
+            echo "pr_number=$pr_number"
+            echo "head_ref=$head_ref"
+            echo "head_repo_fork=$head_repo_fork"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Set up Homebrew
         if: steps.pr.outputs.should_run == 'true'
