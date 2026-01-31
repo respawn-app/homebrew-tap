@@ -1,13 +1,15 @@
 name: brew pr-pull
 
 on:
-  pull_request_target:
+  workflow_run:
+    workflows:
+      - brew test-bot
     types:
-      - labeled
+      - completed
 
 jobs:
   pr-pull:
-    if: contains(github.event.pull_request.labels.*.name, 'pr-pull')
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-22.04
     permissions:
       actions: read
@@ -17,29 +19,61 @@ jobs:
       packages: write
       pull-requests: write
     steps:
+      - name: Resolve PR metadata
+        id: pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pr_number="$(jq -r '.workflow_run.pull_requests[0].number // empty' "$GITHUB_EVENT_PATH")"
+          if [ -z "$pr_number" ]; then
+            echo "No PR found for this workflow_run; skipping."
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          pr_json="$(curl -sS \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/pulls/$pr_number")"
+
+          if echo "$pr_json" | jq -e '.labels[]? | select(.name == "pr-pull")' >/dev/null; then
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "PR #$pr_number missing pr-pull label; skipping."
+            echo "should_run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
+          echo "head_ref=$(echo "$pr_json" | jq -r '.head.ref')" >> "$GITHUB_OUTPUT"
+          echo "head_repo_fork=$(echo "$pr_json" | jq -r '.head.repo.fork')" >> "$GITHUB_OUTPUT"
+
       - name: Set up Homebrew
+        if: steps.pr.outputs.should_run == 'true'
         uses: Homebrew/actions/setup-homebrew@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up git
+        if: steps.pr.outputs.should_run == 'true'
         uses: Homebrew/actions/git-user-config@main
 
       - name: Pull bottles
+        if: steps.pr.outputs.should_run == 'true'
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
-          PULL_REQUEST: ${{ github.event.pull_request.number }}
+          PULL_REQUEST: ${{ steps.pr.outputs.pr_number }}
         run: brew pr-pull --debug --tap="$GITHUB_REPOSITORY" "$PULL_REQUEST"
 
       - name: Push commits
+        if: steps.pr.outputs.should_run == 'true'
         uses: Homebrew/actions/git-try-push@main
         with:
           branch: master
 
       - name: Delete branch
-        if: github.event.pull_request.head.repo.fork == false
+        if: steps.pr.outputs.should_run == 'true' && steps.pr.outputs.head_repo_fork == 'false'
         env:
-          BRANCH: ${{ github.event.pull_request.head.ref }}
+          BRANCH: ${{ steps.pr.outputs.head_ref }}
         run: git push --delete origin "$BRANCH"
