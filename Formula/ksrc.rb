@@ -4,6 +4,12 @@ class Ksrc < Formula
   url "https://github.com/respawn-app/ksrc/archive/refs/tags/v0.6.0.tar.gz"
   sha256 "d17e1f54162e1605e176e4a64c7dc7f317da112b508b408f4d55256d482ee830"
   license "Apache-2.0"
+  depends_on "go" => :build
+  depends_on "ripgrep"
+
+  def install
+    system "go", "build", *std_go_args(ldflags: "-s -w -X github.com/respawn-app/ksrc/internal/cli.Version=#{version}"), "./cmd/ksrc"
+  end
   test do
     assert_match "ksrc", shell_output("#{bin}/ksrc --help")
   end
