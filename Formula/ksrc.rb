@@ -5,11 +5,6 @@ class Ksrc < Formula
   sha256 "127cb7ee92959344104f536f7a9121b0610e0385982e152dc0cca80f88b0df7c"
   license "Apache-2.0"
 
-  bottle do
-    root_url "https://ghcr.io/v2/respawn-app/tap"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "7b677451f52bafc94426360f0e4a136134c1133ace733ea6cb2995467244ef1d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "34278ce92023c1c7bda32857e9719be2a91269cc7e82e05b261eee5dc40be784"
-  end
   depends_on "go" => :build
   depends_on "ripgrep"
 
