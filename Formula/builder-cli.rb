@@ -1,4 +1,4 @@
-class Builder < Formula
+class BuilderCli < Formula
   desc "Minimal terminal coding agent for professional engineering workflows"
   homepage "https://github.com/respawn-app/agent"
   url "https://github.com/respawn-app/agent/archive/e0b51e895ceffab6d4c397e0b81a2bcb63fce818.tar.gz"
