@@ -4,13 +4,14 @@ class BuilderCli < Formula
   url "https://github.com/respawn-app/builder/archive/refs/tags/v0.3.1.tar.gz"
   sha256 "e78ba10e008b49f8883f2d9d653ed532fa4a1576d52230068d56298527b1c8c4"
   license "AGPL-3.0-only"
+
   bottle do
     root_url "https://ghcr.io/v2/respawn-app/tap"
   end
 
+  depends_on "go" => :build
   depends_on "git"
   depends_on "ripgrep"
-  depends_on "go" => :build
 
   def install
     system "go", "build", *std_go_args(output: bin/"builder", ldflags: "-s -w -X builder/internal/buildinfo.Version=#{version}"), "./cmd/builder"
