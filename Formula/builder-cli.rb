@@ -2,13 +2,17 @@ class BuilderCli < Formula
   desc "Minimal terminal coding agent for professional engineering workflows"
   homepage "https://github.com/respawn-app/builder"
   url "https://github.com/respawn-app/builder/archive/refs/tags/v0.1.tar.gz"
-  version "0.1"
   sha256 "11568805f12769284e2e39261d2cbbb9c96397cd81c12951991bb5781d6d0837"
   license "AGPL-3.0-only"
+
+  bottle do
+    root_url "https://ghcr.io/v2/respawn-app/homebrew-tap"
+  end
+
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args(ldflags: "-s -w -X builder/internal/buildinfo.Version=#{version}"), "./cmd/builder"
+    system "go", "build", *std_go_args(output: bin/"builder", ldflags: "-s -w -X builder/internal/buildinfo.Version=#{version}"), "./cmd/builder"
   end
 
   test do
