@@ -1,14 +1,12 @@
 class BuilderCli < Formula
   desc "Minimal terminal coding agent for professional engineering workflows"
   homepage "https://github.com/respawn-app/builder"
-  url "https://github.com/respawn-app/builder/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "c6ef304dbb5e9781e3d6b54e2e7c41c6c4d46a55222829be4f031bfa3387bb67"
+  url "https://github.com/respawn-app/builder/archive/refs/tags/v1.1.1.tar.gz"
+  sha256 "6b9681a1e8831d094f40b39858cab36a888d5ef933e9f723acffe6f33d574d05"
   license "AGPL-3.0-only"
 
   bottle do
     root_url "https://ghcr.io/v2/respawn-app/tap"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "5047275039ea7499bac1366d8d5f299646228ee25ba5bc3e7e2b00d04fb232c5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "d8c69964e7d23fdc111d74296e272534bf46e0eb3d83a35dc7f43f14b8399cc9"
   end
 
   depends_on "go" => :build
