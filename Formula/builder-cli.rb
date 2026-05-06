@@ -7,6 +7,8 @@ class BuilderCli < Formula
 
   bottle do
     root_url "https://ghcr.io/v2/respawn-app/tap"
+    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "1b02f0579f09671145e3b254d1312a1e3bf22b457d9a7437e42385c8d923cb08"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "a5aefe9308c8c58e27a592579dce63638ebf1fff4fd85d37a60333daabee8937"
   end
 
   depends_on "go" => :build
