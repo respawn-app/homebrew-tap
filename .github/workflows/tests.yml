@@ -48,7 +48,7 @@ jobs:
           echo "::add-mask::${base64_token}"
           echo "token=${base64_token}" >> "${GITHUB_OUTPUT}"
 
-      - run: brew test-bot --only-formulae --root-url=https://ghcr.io/v2/respawn-app/homebrew-tap
+      - run: brew test-bot --only-formulae --root-url=https://ghcr.io/v2/respawn-llc/homebrew-tap
         if: github.event_name == 'pull_request'
         env:
           HOMEBREW_DOCKER_REGISTRY_TOKEN: ${{ steps.base64-encode.outputs.token }}
