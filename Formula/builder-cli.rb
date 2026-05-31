@@ -1,7 +1,7 @@
 class BuilderCli < Formula
   desc "Minimal terminal coding agent for professional engineering workflows"
-  homepage "https://github.com/respawn-app/builder"
-  url "https://github.com/respawn-app/builder/archive/refs/tags/v1.3.0.tar.gz"
+  homepage "https://github.com/respawn-llc/builder"
+  url "https://github.com/respawn-llc/builder/archive/refs/tags/v1.3.0.tar.gz"
   sha256 "8360792c485360a780368e40342e60889e3e828cfb26beef895f334aedd54290"
   license "AGPL-3.0-only"
 
