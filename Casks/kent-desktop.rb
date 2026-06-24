@@ -2,7 +2,7 @@ cask "kent-desktop" do
   version "2.1.0"
   sha256 "abe90d6ac0fef69b82dc7517792990f6b8c429a870a51fbf67a29fc07b54ed8c"
 
-  url "https://github.com/respawn-llc/kent/releases/download/v2.1.0/Kent_2.1.0_aarch64.dmg"
+  url "https://github.com/respawn-llc/kent/releases/download/v#{version}/Kent_#{version}_aarch64.dmg"
   name "Kent"
   desc "Desktop client for the Kent coding agent"
   homepage "https://github.com/respawn-llc/kent"
