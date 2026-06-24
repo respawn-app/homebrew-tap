@@ -1,14 +1,12 @@
 class Kent < Formula
   desc "Minimal terminal coding agent for professional engineering workflows"
   homepage "https://github.com/respawn-llc/kent"
-  url "https://github.com/respawn-llc/kent/archive/refs/tags/v2.0.0.tar.gz"
-  sha256 "9201274249c08c83b139bd8779dd3ad79981f79b575cb5d87fd6157b98490eb9"
+  url "https://github.com/respawn-llc/kent/archive/refs/tags/v2.1.0.tar.gz"
+  sha256 "9e34f43b60d8294558894df9bcf66da423c05848071cb57180301977c88257b0"
   license "AGPL-3.0-only"
 
   bottle do
     root_url "https://ghcr.io/v2/respawn-llc/tap"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "d4d90fb985322d68f70db18a18f5c686538bd6756152c78e04da71425ccfe72c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "2dac5e4d5e3ada3100e7ab080107cd3f9ea466bb93656749866631dd7319c55c"
   end
 
   depends_on "go" => :build
