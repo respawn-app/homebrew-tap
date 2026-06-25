@@ -12,7 +12,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Guard kent formula installs prebuilt binaries (no source build)
-        run: bash scripts/check-kent-prebuilt.sh
+        run: |
+          formula="Formula/kent.rb"
+          fail=0
+          for marker in 'scripts/build.sh' 'go build' '=> :build' 'system "go"'; do
+            if grep -qF -- "${marker}" "${formula}"; then
+              echo "ERROR: ${formula} contains source-build marker: ${marker}" >&2
+              fail=1
+            fi
+          done
+          if ! grep -qF 'bin.install' "${formula}"; then
+            echo "ERROR: ${formula} must install a prebuilt binary (bin.install missing)" >&2
+            fail=1
+          fi
+          if [ "${fail}" -ne 0 ]; then
+            echo "kent formula must install prebuilt binaries only" >&2
+            exit 1
+          fi
+          echo "OK: ${formula} installs prebuilt binaries only"
 
   test-bot:
     strategy:

@@ -11,6 +11,8 @@ class Kent < Formula
   depends_on "ripgrep"
 
   on_macos do
+    depends_on arch: :arm64
+
     on_arm do
       url "https://github.com/respawn-llc/kent/releases/download/v2.1.0/kent_2.1.0_darwin_arm64.tar.gz"
       sha256 "6c158b2f41e595e46e9dfc32adad59e4040e98443b01d0e99c52792af98e318c"
