@@ -60,7 +60,15 @@ jobs:
 
       - run: brew test-bot --only-setup
 
-      - run: brew test-bot --only-tap-syntax
+      # Equivalent to `brew test-bot --only-tap-syntax` (style + audit) but without
+      # `brew readall --os=all --arch=all`. readall requires every formula to
+      # resolve a URL for every macOS version, which an arm64-only-on-macOS
+      # prebuilt-binary formula (kent ships no Intel-mac artifact; Intel is
+      # unsupported) can never satisfy. style + audit still load and validate
+      # every formula on each runner.
+      - run: brew style respawn-llc/tap
+
+      - run: brew audit --skip-style --tap=respawn-llc/tap
 
       - name: Base64-encode GITHUB_TOKEN for HOMEBREW_DOCKER_REGISTRY_TOKEN
         id: base64-encode
