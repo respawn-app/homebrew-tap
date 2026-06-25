@@ -1,24 +1,37 @@
 class Kent < Formula
   desc "Minimal terminal coding agent for professional engineering workflows"
   homepage "https://github.com/respawn-llc/kent"
-  url "https://github.com/respawn-llc/kent/archive/refs/tags/v2.1.0.tar.gz"
-  sha256 "9e34f43b60d8294558894df9bcf66da423c05848071cb57180301977c88257b0"
+  version "2.1.0"
   license "AGPL-3.0-only"
 
   bottle do
     root_url "https://ghcr.io/v2/respawn-llc/tap"
-    sha256 cellar: :any_skip_relocation, arm64_tahoe:  "74bb20b007dc741c351c73f701f2c28929d5f439b457e7432278795d3a1bec32"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "a39f751d8e1f054da28c38ffaf2f22540426031fefc6b5234fee4abc021a603c"
   end
 
-  depends_on "go" => :build
-  depends_on "node" => :build
-  depends_on "pnpm" => :build
   depends_on "ripgrep"
 
+  on_macos do
+    on_arm do
+      url "https://github.com/respawn-llc/kent/releases/download/v2.1.0/kent_2.1.0_darwin_arm64.tar.gz"
+      sha256 "6c158b2f41e595e46e9dfc32adad59e4040e98443b01d0e99c52792af98e318c"
+    end
+  end
+
+  on_linux do
+    on_arm do
+      url "https://github.com/respawn-llc/kent/releases/download/v2.1.0/kent_2.1.0_linux_arm64.tar.gz"
+      sha256 "4f2dd17dfb08fffb8bbda698fafe246210288e386f4c4d7baaab6b7576f6c7b2"
+    end
+    on_intel do
+      url "https://github.com/respawn-llc/kent/releases/download/v2.1.0/kent_2.1.0_linux_amd64.tar.gz"
+      sha256 "a7d8950148a4ed0cb91ab7f7a6122389f23f42970af686fd701fc0d270f480f8"
+    end
+  end
+
   def install
-    ENV["KENT_VERSION"] = version.to_s
-    system "bash", "scripts/build.sh", "--output", bin/"kent"
+    os = OS.mac? ? "darwin" : "linux"
+    arch = Hardware::CPU.arm? ? "arm64" : "amd64"
+    bin.install "kent_#{version}_#{os}_#{arch}" => "kent"
   end
 
   def post_install

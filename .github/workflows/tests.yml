@@ -7,6 +7,13 @@ on:
   pull_request:
 
 jobs:
+  guard-kent-prebuilt:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Guard kent formula installs prebuilt binaries (no source build)
+        run: bash scripts/check-kent-prebuilt.sh
+
   test-bot:
     strategy:
       matrix:
