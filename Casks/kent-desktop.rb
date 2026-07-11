@@ -1,6 +1,6 @@
 cask "kent-desktop" do
-  version "2.1.1"
-  sha256 "50fd7db336923f92376465b0bce7b184ed3c820edbd02d0d1deddf94bd500737"
+  version "2.2.0"
+  sha256 "e6f6e43553cf5465ebdf88a66052c5ab2a8da99412b5317efae75d07d15ed9ac"
 
   url "https://github.com/respawn-llc/kent/releases/download/v#{version}/Kent_#{version}_aarch64.dmg"
   name "Kent"
@@ -8,7 +8,7 @@ cask "kent-desktop" do
   homepage "https://github.com/respawn-llc/kent"
 
   depends_on formula: "kent"
-  depends_on macos: :tahoe
+  depends_on macos: :sequoia
   depends_on arch: :arm64
 
   app "Kent.app"
