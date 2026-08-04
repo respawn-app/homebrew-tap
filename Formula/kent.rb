@@ -2,7 +2,6 @@ class Kent < Formula
   desc "Minimal terminal coding agent for professional engineering workflows"
   homepage "https://github.com/respawn-llc/kent"
   url "https://github.com/respawn-llc/kent/releases/download/v2.5.0/kent_2.5.0_darwin_arm64.tar.gz"
-  version "2.5.0"
   sha256 "b712e8ff87628241d01d3276d3f701931d3e54748ebc1385ece9fd348cac11ea"
   license "AGPL-3.0-only"
 
