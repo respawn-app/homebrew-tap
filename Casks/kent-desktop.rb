@@ -1,6 +1,6 @@
 cask "kent-desktop" do
-  version "2.6.0"
-  sha256 "18e13764e8adc7bba5a9eb9259e4694e1fe10a3ef93670dced7796f6eb7cb007"
+  version "2.6.1"
+  sha256 "f9313a30cfa65001a6e9f2b50540a7eda242f3e57ee3056be8d860636e6d8a1d"
 
   url "https://github.com/respawn-llc/kent/releases/download/v#{version}/Kent_#{version}_aarch64.dmg"
   name "Kent"
