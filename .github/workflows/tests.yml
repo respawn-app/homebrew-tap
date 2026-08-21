@@ -70,6 +70,10 @@ jobs:
 
       - run: brew audit --skip-style --tap=respawn-llc/tap
 
+      - name: Require downloadable kent bottle
+        if: github.event_name == 'push'
+        run: brew fetch --force --force-bottle "$GITHUB_REPOSITORY/kent"
+
       - name: Base64-encode GITHUB_TOKEN for HOMEBREW_DOCKER_REGISTRY_TOKEN
         id: base64-encode
         if: github.event_name == 'pull_request'
