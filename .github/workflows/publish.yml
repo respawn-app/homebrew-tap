@@ -71,8 +71,10 @@ jobs:
           HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
           PULL_REQUEST: ${{ steps.pr.outputs.pr_number }}
         run: |
-          RUBYOPT="-r$(brew --repository)/Library/Homebrew/cask/cask_loader.rb" \
-            brew pr-pull --debug --tap="$GITHUB_REPOSITORY" "$PULL_REQUEST"
+          brew ruby \
+            -r"$(brew --repository)/Library/Homebrew/cask/cask_loader.rb" \
+            "$(brew --repository)/Library/Homebrew/brew.rb" -- \
+            pr-pull --debug --tap="$GITHUB_REPOSITORY" "$PULL_REQUEST"
 
       - name: Require every supported bottle before publishing
         if: steps.pr.outputs.should_run == 'true'
