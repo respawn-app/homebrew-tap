@@ -91,6 +91,7 @@ jobs:
               echo "::error::Refusing to publish kent without macOS ARM, Linux ARM, and Linux x86 bottles."
               exit 1
             }
+          brew fetch --all-platforms --force --force-bottle "$GITHUB_REPOSITORY/kent"
 
       - name: Push commits
         if: steps.pr.outputs.should_run == 'true'
