@@ -70,7 +70,25 @@ jobs:
           HOMEBREW_GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HOMEBREW_GITHUB_PACKAGES_USER: ${{ github.repository_owner }}
           PULL_REQUEST: ${{ steps.pr.outputs.pr_number }}
-        run: brew pr-pull --debug --tap="$GITHUB_REPOSITORY" "$PULL_REQUEST"
+        run: |
+          RUBYOPT="-r$(brew --repository)/Library/Homebrew/cask/cask_loader.rb" \
+            brew pr-pull --debug --tap="$GITHUB_REPOSITORY" "$PULL_REQUEST"
+
+      - name: Require every supported bottle before publishing
+        if: steps.pr.outputs.should_run == 'true'
+        run: |
+          brew info --json=v2 "$GITHUB_REPOSITORY/kent" |
+            jq -e '
+              .formulae[0].bottle.stable as $bottle |
+              $bottle.root_url == "https://ghcr.io/v2/respawn-llc/tap" and
+              all(
+                ["arm64_tahoe", "arm64_linux", "x86_64_linux"][];
+                ($bottle.files[.]?.sha256 | type == "string" and length == 64)
+              )
+            ' >/dev/null || {
+              echo "::error::Refusing to publish kent without macOS ARM, Linux ARM, and Linux x86 bottles."
+              exit 1
+            }
 
       - name: Push commits
         if: steps.pr.outputs.should_run == 'true'
